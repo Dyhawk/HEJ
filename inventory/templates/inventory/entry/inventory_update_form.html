@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block title %}Entry item.sku{% endblock %}
+
+{% block content %}
+<div class="row pt-md-5 mt-md-3 mb-5">
+    <div class="col-xl-8 col-sm-3 p-2">
+<h2>Update Item Information for {{item.internalsku}}</h2>
+<table class="table">
+    <tr>
+        <td class="table-secondary font-weight-bolder">Manufacture Number:</td>
+        <td class="table-active text-muted">{{item.sku}}</td>
+        <td class="table-secondary font-weight-bolder">Supplier:</td>
+        <td class="table-active text-muted">{{item.sku.supplier}}</td>
+        <td class="table-secondary font-weight-bolder">AWB:</td>
+        <td class="table-active text-muted">{{item.entry.awb}}</td>
+    </tr>
+    <tr>
+        <td class="table-secondary font-weight-bolder">Invoice Number:</td>
+        <td class="table-active text-muted">{{item.entry.invoice_number}}</td>
+        <td class="table-secondary font-weight-bolder">Invoice Date:</td>
+        <td class="table-active text-muted">{{item.entry.invoice_date}}</td>
+        <td class="table-secondary font-weight-bolder">Retail:</td>
+        <td class="table-active text-muted">{{item.sku.retail| floatformat:"2"|intcomma}}</td>
+    </tr>
+    
+</table>
+
+<br>   
+
+<form method="post">
+  <table>
+    {{form|crispy}}
+    {% csrf_token %}
+  </table>
+  <input class="btn btn-info"type="submit"value="Update">
+  <br>
+
+</form>
+
+</div>
+</div>
+
+{% endblock %}

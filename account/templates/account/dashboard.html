@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <!-- navbar -->
+    <div class="row pt-md-5 mt-md-3 mb-5">
+        <div class="col-xl-3 col-sm-6 p-2">
+              <p>Welcome to your dashboard. <a href="{% url "password_change" %}">change your password</a>.</p>
+        </div>
+    </div>
+
+{% endblock %}

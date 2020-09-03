@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Create New Entry{% endblock%}
+{% block content %}
+<div class="row pt-md-5 mt-md-3 mb-5 justify-content-md-center">
+<div class="col-xl-10 col-sm-12 p-2">
+<h2>Create Entry</h2>
+<br>
+<br>
+<form class="" method="post">
+    <table>
+        {{ form.as_table }}
+        {% csrf_token %}
+    </table>
+    <input class="btn btn-info" type="submit" name="" value="Confirm">
+    <br>
+</form>
+</div>
+</div>
+
+{% endblock %}

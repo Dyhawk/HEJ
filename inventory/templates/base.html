@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/279fe41e19.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    {% if request.user.is_authenticated %}
+    <nav class="navbar navbar-expand-md navbar-light">
+        <button class="navbar-toggler ml-auto mb-2 bg-light" type="button" data-toggle="collapse" data-target="#myNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <div class="container-fluid">
+            <div class="row">
+              <!-- sidebar -->
+              <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
+                <a href="#" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">Harry Edwards</a>
+                <div class="bottom-border pb-3">
+                  <!-- add image and name from django here -->
+                  <img src="{% if user.profile.photo %}{{user.profile.photo.url}}{% else %}{%static "media/users/no-profile-picture-icon.jpg" %}{% endif %}" width="50" class="rounded-circle mr-3">
+                  <!-- click to view profile information-->
+                  <a href="#" class="text-white">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                </div>
+                <ul class="navbar-nav flex-column mt-4">
+                  <li class="nav-item"><a href="{% url "dashboard" %}" class="nav-link text-white p-3 mb-2 current"><i class="fas fa-home text-light fa-lg mr-3"></i>Dashboard</a></li>
+                  <li class="nav-item"><a href="{% url "edit" %}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a></li>
+                  <li class="nav-item"><a href="{% url "entry_list" %}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-envelope text-light fa-lg mr-3"></i>Entries</a></li>
+                  <!-- <li class="nav-item"><a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i>Inventory</a></li> -->
+                  <!-- Default dropleft button -->
+                  <li class="nav-item">
+                  <div class="btn-group dropright">
+                    <a class="dropdown-toggle nav-link text-white p-3 mb-2 sidebar-link" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
+                      <i class="fas fa-truck text-light fa-lg mr-3"></i>Inventory
+                    </a>
+                      <div class="dropdown-menu bg-dark text-light">
+                          <h6 class="dropdown-header">Inventory Options</h6>
+                          <a class="dropdown-item text-light" href="{% url "add_supplier" %}">Add Supplier</a>
+                          <a class="dropdown-item text-light" href="{% url "add_tariff" %}">Add Tariff</a>
+                          <a class="dropdown-item text-light" href="{% url "add_shipment_type" %}">Add Shipment Type</a>
+                          <a class="dropdown-item text-light" href="{% url "add_department" %}">Add Department</a>
+                          <a class="dropdown-item text-light" href="{% url "add_catalogue" %}">Add Catalogue Item</a>
+                        <!-- Dropdown menu links -->
+                      </div>
+                    </div>
+                  </li>
+                  <li class="nav-item"><a href="{% url "upload_sales" %}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-cart-arrow-down text-light fa-lg mr-3"></i>Upload Sales</a></li>
+                  <li class="nav-item"><a href="{% url "asycuda_file_upload" %}" class="nav-link text-white p-3 mb-2 sidebar-link"><i class="fas fa-download text-light fa-lg mr-3"></i>Upload Asycuda XML</a></li>
+                </ul>
+              </div>
+            
+              <!-- end of sidebar -->
+  
+  
+              <!-- top-nav -->
+              <div class="col-xl-10 col-lg-9 col-md-8 ml-auto bg-dark fixed-top py-2 top-navbar">
+                <div class="row align-items-right">
+                  <div class="col-md-4">
+                    <h4 class="text-light text-uppercase mb-0">Dashboard</h4>
+                  </div>
+                  <div class="col-md-7">
+                    <!-- place holder for more features as developed-->
+                  </div>
+                  <div class="col-md-1 right">
+                    <ul class="navbar-nav">
+                      <li class="nav-item icon-parent"><a href="#" class="nav-link icon-bullet"><i class="fas fa-user-cog text-muted fa-lg"></i></a></li>
+                      <li class="nav-item ml-md-auto"><a href="{% url "logout" %}" class="nav-link"><i class="fas fa-sign-out-alt text-muted fa-lg"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+               
+              </div>
+  
+                          <!-- end of top-nav -->
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- end of navbar --><!-- end of top-nav -->
+      {% endif %}
+  
+    <div id="content">
+        <section>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+                  <!--<div class="row pt-md-5 mt-md-3 mb-5">
+                    <div class="col-xl-3 col-sm-6 p-2">-->
+                      <!--Messaging information-->
+                      {% if not request.user.is_authenticated %}
+                      {% if messages %}
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <ul class="messages" style="list-style-type:none;">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">
+                          {{ message|safe }}
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </li>
+                        {% endfor %}
+                        
+                      </ul>
+                    </div>
+                      {% endif %}
+                      {% endif %}
+                      <!-- end of messaging information-->
+                        {% block content %}
+                        {% endblock %}
+                    </div>  
+                   </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+    </div>
+    
+</body>
+</html>
