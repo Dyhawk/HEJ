@@ -41,9 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'haystack',
     'inventory.apps.InventoryConfig',
+    'payrol.apps.PayrolConfig',
     'sad.apps.SadConfig',
+    'task.apps.TaskConfig',
     'crispy_forms',
     'django_extensions',
+    'django_filters',
+    'django_tables2',
     
 ]
 

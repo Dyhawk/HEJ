@@ -6,8 +6,7 @@
 {% if request.user.is_authenticated %}
 <div class="row pt-md-5 mt-md-3 mb-5 justify-content-md-center">
     <div class="col-xl-10 col-sm-12 p-2">
-
-    
+            
     <form action="" method="get" class="form form-inline">
     {{ filter.form.as_p}}
     <button  class="btn btn-info" type="submit">Search</button>
@@ -17,8 +16,9 @@
     {% render_table table 'django_tables2/bootstrap4.html'%}
 
 {% else %}
-<p class="text-muted">You must be authenticated to view this content.</p>
+    <p class="text-muted">You must be authenticated to view this content.</p>
 {% endif %}
+
     </div>
 </div>
 {% endblock %}

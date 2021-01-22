@@ -2,6 +2,8 @@ from django.urls import path
 from sad import views
 
 urlpatterns = [
+    path('customs_inventory', views.CustomsInventoryListView.as_view(),
+    name='customs_inventory'),
     path('download_xml', views.download_created_xml, name='winjewel_xml_download'),
     path('upload_entry_file/<int:pk>/', views.upload_winjewel_entry, 
     name='winjewel_file_upload'),

@@ -7,6 +7,14 @@ from sad.tools import items, xmlTemplate
 from sad.models import CustomsInventory, UploadedSales
 from django.contrib.auth.decorators import login_required
 import math
+from django.views.generic.list import ListView
+from braces.views import LoginRequiredMixin, \
+                        PermissionRequiredMixin
+import django_tables2 as tables 
+from django_tables2.paginators import LazyPaginator
+from django_filters.views import FilterView
+from .tables import CustomsInventoryTable
+from .filter import CustomsInventoryFilter
 
 # Create your views here.
 @login_required
@@ -139,3 +147,14 @@ def submit_sales(request):
         gender=line[14])
         record.save()
     return render(request, 'sad/sales_upload_success.html')
+
+
+class CustomsInventoryListView(LoginRequiredMixin, tables.views.SingleTableMixin,\
+                        FilterView,ListView):
+    model = CustomsInventory
+    queryset = CustomsInventory.objects.all()
+    table_class = CustomsInventoryTable
+    filterset_class = CustomsInventoryFilter
+    pagination_class = LazyPaginator
+    template_name = 'sad/customs_inventory.html'
+

@@ -12,15 +12,26 @@ from braces.views import LoginRequiredMixin, \
 from inventory.tools import internal_sku, totals
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django_filters.views import FilterView
+from .filter import SupplierFilter
+from .tables import SupplierTable
+import django_tables2 as tables 
+from django_tables2.paginators import LazyPaginator
 
 # Create your views here.
 class CatalogueListView(LoginRequiredMixin, ListView):
     model = Catalogue
     template_name = 'inventory/catalogue/cat_list.html'
 
-class SupplierListView(LoginRequiredMixin, ListView):
+class SupplierListView(LoginRequiredMixin, tables.views.SingleTableMixin,\
+                        FilterView, ListView):
     model = Supplier
+    table_class = SupplierTable
+    queryset = Supplier.objects.all()
+    pagination_class = LazyPaginator
+    filterset_class = SupplierFilter
     template_name = 'inventory/catalogue/sup_list.html'
+
 
 class ShipmentTypeCreateView(LoginRequiredMixin, CreateView):
     model = ShipmentType
